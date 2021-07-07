@@ -1,17 +1,6 @@
 <template>
-  <div v-if="ispreparing==1" ip="test1" >
-    <h1 style="padding-top: 150px">Hello</h1>
-    <div>     
-      <label>IP:</label>    
-      <input v-model="ip" placeholder="0.0.0.0">
-      <br>
-      <label>PORT:</label>  
-      <input v-model="port" placeholder="5555">
-      <br>
-      <button v-on:click="StartEventHandler" style="width:100px;height:30px">Start</button>
-    </div>
- </div>
- <div v-else id="touchView"   @touchstart="TouchStartHandler" @touchmove="TouchMoveHandler"     @touchend="TouchEndHandler" >
+
+ <div id="touchView"   @touchstart="TouchStartHandler" @touchmove="TouchMoveHandler"     @touchend="TouchEndHandler" >
     <h1>Current IP: {{ip}}</h1>
     <h1>Current PORT: {{port}}</h1>
     <h1>Canvas Width: {{windowWidth}}</h1>
@@ -32,13 +21,21 @@ export default {
       x_touch: 1,
       y_touch: 1,
       ws: WebSocket,
-      ip: '0.0.0.0',
-      port: '0000',
+      ip: '192.168.1.111',
+      port: '5555',
       windowWidth: document.documentElement.clientWidth,
       windowHeight: document.documentElement.clientHeight,
     }
   },
   watch: {
+    // windowHeight(val) {
+    //   let that = this;
+    //   // console.log("实时屏幕高度：", val, that.windowHeight);
+    // },
+    // windowWidth(val) {
+    //   let that = this;
+    //   // console.log("实时屏幕宽度：", val, that.windowHeight);
+    // },
     ip(str) {
       localStorage.setItem("ip", str);
     },
@@ -48,17 +45,32 @@ export default {
   },
   methods: {
     StartEventHandler() {
-      this.ispreparing = 0;
 
       var height = document.body.offsetHeight;
       console.log(height);
 
 
       this.StartWebSocket();
+      // alert("Function!");
+      // alert(this.ip);
     },
+    // ClickEventHandler(e) {
+    //   var x = e.x //获取鼠标的X坐标（鼠标与屏幕左侧的距离，单位为px）
+    //   var y = e.y //获取鼠标的Y坐标（鼠标与屏幕顶部的距离，单位为px）
+
+    //   this.x_touch = x;
+    //   this.y_touch = y;
+    //   var jsonObj = {
+    //     eventType:"Click",
+    //     x: this.x_touch,
+    //     y: this.y_touch
+    //   };
+
+    //   this.ws.send(JSON.stringify(jsonObj));
+    // },
     TouchStartHandler(e) {
-      var x = e.touches[0].clientX; //获取鼠标的X坐标（鼠标与屏幕左侧的距离，单位为px）
-      var y = e.touches[0].clientY; //获取鼠标的Y坐标（鼠标与屏幕顶部的距离，单位为px）
+      var x = parseInt(e.touches[0].clientX); //获取鼠标的X坐标（鼠标与屏幕左侧的距离，单位为px）
+      var y = parseInt(e.touches[0].clientY); //获取鼠标的Y坐标（鼠标与屏幕顶部的距离，单位为px）
 
       this.x_touch = x;
       this.y_touch = y;
@@ -74,8 +86,8 @@ export default {
 
     },
     TouchMoveHandler(e) {
-      var x = e.touches[0].clientX; //获取鼠标的X坐标（鼠标与屏幕左侧的距离，单位为px）
-      var y = e.touches[0].clientY; //获取鼠标的Y坐标（鼠标与屏幕顶部的距离，单位为px）
+      var x = parseInt(e.touches[0].clientX) //获取鼠标的X坐标（鼠标与屏幕左侧的距离，单位为px）
+      var y = parseInt(e.touches[0].clientY); //获取鼠标的Y坐标（鼠标与屏幕顶部的距离，单位为px）
 
       this.x_touch = x;
       this.y_touch = y;
@@ -93,8 +105,8 @@ export default {
       this.ws.send(JSON.stringify(jsonObj));
     },
     TouchEndHandler(e) {
-      var x = e.changedTouches[0].clientX; //获取鼠标的X坐标（鼠标与屏幕左侧的距离，单位为px）
-      var y = e.changedTouches[0].clientY; //获取鼠标的Y坐标（鼠标与屏幕顶部的距离，单位为px）
+      var x = parseInt(e.changedTouches[0].clientX); //获取鼠标的X坐标（鼠标与屏幕左侧的距离，单位为px）
+      var y = parseInt(e.changedTouches[0].clientY); //获取鼠标的Y坐标（鼠标与屏幕顶部的距离，单位为px）
 
       this.x_touch = x;
       this.y_touch = y;
@@ -109,6 +121,18 @@ export default {
       console.log('end x:' + this.x_touch);
 
       this.ws.send(JSON.stringify(jsonObj));
+
+      // // 还原交互信息
+      // this.touchEvent = 'None';
+      // jsonObj = {
+      //   eventType:"None",
+      //   x: 0,
+      //   y: 0
+      // };
+
+      // console.log('none:' + 0);
+
+      // this.ws.send(JSON.stringify(jsonObj));
       
     },
     StartWebSocket() {
@@ -126,6 +150,8 @@ export default {
   },
   mounted() {
 
+    //StartEventHandler();
+
       document.body.onselectstart = function () { 
           return false; 
       };
@@ -134,14 +160,18 @@ export default {
       e.preventDefault();
     },{passive: false});
 
-    // 读取上次的ip和port
-    if (localStorage.getItem("ip") != null) {
-      this.ip = localStorage.getItem("ip");
-    }
+    // // 读取上次的ip和port
+    // if (localStorage.getItem("ip") != null) {
+    //   this.ip = localStorage.getItem("ip");
+    // }
 
-    if (localStorage.getItem("port") != null) {
-      this.port = localStorage.getItem("port");
-    }
+    // if (localStorage.getItem("port") != null) {
+    //   this.port = localStorage.getItem("port");
+    // }
+
+    this.ip = '192.168.1.111';
+    this.port = '5555';
+    
 
 
     // 读取分辨率
@@ -155,6 +185,8 @@ export default {
         that.windowWidth = window.fullWidth; // 宽  
       })()
     }
+
+    this.StartWebSocket();
   }
 }
 
