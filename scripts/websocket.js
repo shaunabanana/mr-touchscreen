@@ -9,8 +9,8 @@ function sendMessage() {
     if (!websocket) return;
     var message = {
         eventType: touchEvent,
-        x: touchX,
-        y: touchY
+        x: Math.round(touchX),
+        y: Math.round(touchY)
     };
     websocket.send(JSON.stringify(message));
 }
