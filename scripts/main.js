@@ -2,15 +2,29 @@ let websocket = null, ip, port;
 let width = window.innerWidth, height = window.innerHeight;
 let touchEvent = 'None', touchX = 0, touchY = 0;
 
+
+// if (typeof console  != "undefined") 
+//     if (typeof console.log != 'undefined')
+//         console.olog = console.log;
+//     else
+//         console.olog = function() {};
+
+// console.log = function(message) {
+//     console.olog(message);
+//     document.getElementById('app').append(message);
+// };
+// console.error = console.debug = console.info =  console.log
+
+
 // Get IP and port from localStorage
-if (localStorage.getItem("ip")) {
-    ip = localStorage.getItem("ip");
-    document.querySelector('#popup #ip').value = ip;
-}
-if (localStorage.getItem("port")) {
-    port = localStorage.getItem("port");
-    document.querySelector('#popup #port').value = port;
-}
+// if (localStorage.getItem("ip")) {
+//     ip = localStorage.getItem("ip");
+//     document.getElementById('ip-input').value = ip;
+// }
+// if (localStorage.getItem("port")) {
+//     port = localStorage.getItem("port");
+//     document.getElementById('port-input').value = port;
+// }
 
 // Resize handler
 function onResize() {
@@ -35,25 +49,25 @@ function connectClicked() {
         return;
     }
 
-    document.querySelector('#popup button').disabled = true;
-    document.querySelector('#popup button').innerHTML = 'Connecting...';
+    document.getElementById('connect').disabled = true;
+    document.getElementById('connect').innerHTML = 'Connecting...';
 
-    ip = document.querySelector('#popup #ip').value;
-    port = document.querySelector('#popup #port').value;
+    ip = document.getElementById('ip-input').value;
+    port = document.getElementById('port-input').value;
 
-    localStorage.setItem("ip", ip);
-    localStorage.setItem("port", port);
-
+    // localStorage.setItem("ip", ip);
+    // localStorage.setItem("port", port);
+    
     connect(ip, port);
 }
 
 
 
 function updateInfo() {
-    document.querySelector('#touch #address').innerHTML = `Connection: ${ip}:${port}`;
-    document.querySelector('#touch #size').innerHTML = `Canvas size: ${width} x ${height}`;
-    document.querySelector('#touch #event').innerHTML = `Touch event: ${touchEvent}`;
-    document.querySelector('#touch #position').innerHTML = `Touch position: (${Math.round(touchX)}, ${Math.round(touchY)})`;
+    document.getElementById('address').innerHTML = `Connection: ${ip}:${port}`;
+    document.getElementById('size').innerHTML = `Canvas size: ${width} x ${height}`;
+    document.getElementById('event').innerHTML = `Touch event: ${touchEvent}`;
+    document.getElementById('position').innerHTML = `Touch position: (${Math.round(touchX)}, ${Math.round(touchY)})`;
 }
 
 function enableTouchEvents() {
@@ -61,7 +75,7 @@ function enableTouchEvents() {
     window.ontouchstart = onTouchStart;
     window.ontouchmove = onTouchMove;
     window.ontouchend = onTouchEnd;
-    document.querySelector('#overlay').hidden = true;
+    document.getElementById('overlay').hidden = true;
     updateInfo();
 }
 
@@ -70,15 +84,3 @@ function disableTouchEvents() {
     // document.querySelector('#overlay').hidden = true;
     updateInfo();
 }
-
-if (typeof console  != "undefined") 
-    if (typeof console.log != 'undefined')
-        console.olog = console.log;
-    else
-        console.olog = function() {};
-
-console.log = function(message) {
-    console.olog(message);
-    document.querySelector('#app').append('<p>' + message + '</p>');
-};
-console.error = console.debug = console.info =  console.log

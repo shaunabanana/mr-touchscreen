@@ -1,4 +1,5 @@
 function connect(ip, port) {
+    console.log("Connecting to" + `ws://${ip}:${port}`);
     websocket = new WebSocket(`ws://${ip}:${port}`);
     websocket.onopen = enableTouchEvents;
     websocket.onclose = handleDisconnect;

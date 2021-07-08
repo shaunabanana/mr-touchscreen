@@ -1,5 +1,4 @@
 function onTouchStart(e) {
-    console.log(e);
     touchX = e.touches[0].clientX; //获取鼠标的X坐标（鼠标与屏幕左侧的距离，单位为px）
     touchY = e.touches[0].clientY; //获取鼠标的Y坐标（鼠标与屏幕顶部的距离，单位为px）
     touchEvent = 'TouchStart';
