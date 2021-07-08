@@ -31,7 +31,7 @@ document.body.addEventListener('touchmove', function(e) {
 
 function connectClicked() {
     if (websocket) {
-        console.error("Connent button clicked while connected. This is not supposed to happen. What did you do?");
+        console.error("Connect button clicked while connected. This is not supposed to happen. What did you do?");
         return;
     }
 
@@ -71,3 +71,14 @@ function disableTouchEvents() {
     updateInfo();
 }
 
+if (typeof console  != "undefined") 
+    if (typeof console.log != 'undefined')
+        console.olog = console.log;
+    else
+        console.olog = function() {};
+
+console.log = function(message) {
+    console.olog(message);
+    document.querySelector('#app').append('<p>' + message + '</p>');
+};
+console.error = console.debug = console.info =  console.log
