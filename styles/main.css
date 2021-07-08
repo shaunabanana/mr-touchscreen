@@ -1,0 +1,96 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+    background: #123;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-x: none;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+
+#touch {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+}
+
+#touch p {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-block-start: 0.5rem;
+    margin-block-end: 0.5rem;
+}
+
+
+#overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+
+    cursor: default;
+}
+
+
+#popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 50%;
+    max-height: 50%;
+    transform: translate(-50%, -50%);
+
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+#popup input[type=text], #popup select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+}
+
+label {
+    font-weight: bold;
+}
+
+#popup button {
+    width: 100%;
+    height: 3rem;
+    background-color: black;
+    color: white;
+    margin: 2rem 0 0 0;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+}  
+
+#popup button:disabled {
+    background-color: gray;
+    color: white;
+}  
